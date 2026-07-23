@@ -5,6 +5,14 @@ import (
 	"math"
 )
 
+func mini_invest() {
+	invest, rate, time := 10000.0, 5.5, 10.0 // decalre multiple variables without explicit type or var def
+	var short_term_val float64
+	short_term_val = invest * math.Pow(1+rate/100, time)
+	fmt.Println(short_term_val)
+
+}
+
 func investment() {
 	var investment_amt float64 // mention var type only for undecalred vars
 	return_rate := 5.5         // for decalred vals no need to decalre var type
@@ -22,4 +30,6 @@ func investment() {
 func main() {
 	fmt.Print("The investment fund is : \n")
 	investment()
+	fmt.Println("Short term investment return:")
+	mini_invest()
 }
