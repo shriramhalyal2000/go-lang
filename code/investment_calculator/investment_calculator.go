@@ -7,8 +7,7 @@ import (
 
 func mini_invest() {
 	invest, rate, time := 10000.0, 5.5, 10.0 // decalre multiple variables without explicit type or var def
-	var short_term_val float64
-	short_term_val = invest * math.Pow(1+rate/100, time)
+	short_term_val := invest * math.Pow(1+rate/100, time)
 	fmt.Println(short_term_val)
 
 }
