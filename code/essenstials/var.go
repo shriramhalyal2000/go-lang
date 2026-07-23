@@ -34,7 +34,7 @@ func div() {
 	var y float64
 	var u float64
 
-	fmt.Println("enter your div numbers: \n")
+	fmt.Println("enter your div numbers:")
 	fmt.Scanln(&y, &u)
 	d = y / u
 	fmt.Println("divided number is : \n", d)
@@ -45,6 +45,6 @@ func main() {
 	fmt.Println("Substraction function")
 	sub()
 	mul()
-	fmt.Println("\n")
+	fmt.Print("\n")
 	div()
 }
