@@ -4,11 +4,11 @@ import (
 	"fmt"
 )
 
-func getUserInput(getText string) float64 {
+func getUserInput(getText string) float64 { // accepts input as string to display
 	var inputText float64
 	fmt.Println(getText)
 	fmt.Scanln(&inputText)
-	return inputText
+	return inputText // returns float
 }
 
 func calculateFinancials(revenue, expense, taxRate float64) (float64, float64, float64) {
