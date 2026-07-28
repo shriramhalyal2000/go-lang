@@ -23,7 +23,7 @@ func profitCalculator() {
 	fmt.Println("Earnings after tas is :", earningsAfterTax)
 
 	taxPaidIs := float64(earningBeforeTax - earningsAfterTax)
-	fmt.Println("Total tax paid is :", taxPaidIs)
+	fmt.Printf("Total tax paid is :%v", taxPaidIs)
 
 }
 
