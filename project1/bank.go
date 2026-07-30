@@ -30,8 +30,12 @@ func operation(choice int) float64 {
 		} else if choice == 3 {
 			if balance >= 100 {
 				withdraw := getInput("Withdraw amount:")
-				balance -= withdraw
-				fmt.Println("Updated balance after withdraw amount is :", balance)
+				if withdraw >= 0 {
+					balance -= withdraw
+					fmt.Println("Updated balance after withdraw amount is :", balance)
+				} else {
+					fmt.Println("Withdraw amount should alwasy be a positive number")
+				}
 			}
 		} else {
 			fmt.Println("Invalid choice of entry:", choice)
