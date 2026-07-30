@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -16,17 +17,28 @@ func getInput(getText string) float64 { // displays message to user to get input
 }
 
 func toFile(balance float64) { //writes balance to external file
-	balanceTxt := fmt.Sprint(balance) // formats balance
+	balanceTxt := fmt.Sprint(balance) // formats balance, Formatting string from stored value and passing it in to a var
 	os.WriteFile(accounBalanceFile, []byte(balanceTxt), 0644)
 }
-func fetchBalance() float64 {
-	data, _ := os.ReadFile(accounBalanceFile)         // var to hold file const
-	balanceText := string(data)                       //convert data in to string, balance is float64
-	balance, _ := strconv.ParseFloat(balanceText, 64) //convert data back to encoded float64
-	return balance
+func fetchBalance() (float64, error) {
+	data, err := os.ReadFile(accounBalanceFile) // var to hold file const, looks for the file to read, but also returns error if it doesnot find any(err), points to file from that function
+	if err != nil {
+		return 0, errors.New("failed to find balace repot file") // returns error message when balance file not found, stopps code from crshing.
+	}
+	balanceText := string(data)                         //convert data in to string, balance is float64 --> pass file into variable to convert its data into string
+	balance, err := strconv.ParseFloat(balanceText, 64) //convert data back to encoded float64 --> convert the string data to float
+	if err != nil {
+		return 0, errors.New("Failed to parse the file data")
+	}
+	return balance, nil
 }
 func operation(choice int) float64 { // bank operation logic to get balance, withdraw money and dipost money
-	balance := fetchBalance()
+	balance, err := fetchBalance()
+	if err != nil {
+		fmt.Println("---error---")
+		fmt.Println(err) //prints user defined error here
+		fmt.Println("---error---")
+	}
 	var deposit float64
 	for choice != 4 {
 		if choice == 1 {
