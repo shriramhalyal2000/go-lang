@@ -12,14 +12,14 @@ func getInput(getText string) float64 {
 }
 
 func operation(choice int) float64 {
-	var balance float64
+	balance := 999999.0
 	var deposit float64
 	for choice != 4 {
 		if choice == 1 {
 			balance += deposit
 			if balance > 0 {
 				fmt.Println("The available balance is :", balance)
-				break // breaks out of loop completely
+				//break // breaks out of loop completely
 			} else {
 				fmt.Println("You dont have displayable balance")
 			}
