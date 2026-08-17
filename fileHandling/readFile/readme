@@ -1,0 +1,4 @@
+Reading a .txt file
+The data.txt file exists, and a strigth forward code to pint out the data.
+The file code read this readme, and resturns its data in string contents.
+- and it also returns an error that it did not find other designated file.
