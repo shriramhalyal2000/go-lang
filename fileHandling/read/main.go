@@ -24,6 +24,13 @@ func main() {
 func ReadFile(file string) (string, error) {
 	data, err := os.ReadFile(file)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) { // handles specific file not exist error
+			fmt.Println("file not found!")
+			return "", nil
+		} else if errors.Is(err, os.ErrPermission) { // handles specific file permissione error
+			fmt.Println("Error!, File permission error")
+			return "", err
+		}
 		fmt.Println("Error in file handling")
 		return "", err
 	}
@@ -37,8 +44,11 @@ func ReadFile(file string) (string, error) {
 func FileExists(path string) (bool, error) {
 	_, err := os.Lstat(path)
 	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
+		if errors.Is(err, os.ErrNotExist) { // handles specific file not exist error
 			fmt.Println("file not found!")
+			return false, nil
+		} else if errors.Is(err, os.ErrPermission) { // handles specific file permissione error
+			fmt.Println("Error!Permision denied")
 			return false, nil
 		}
 		fmt.Println("Error!, file not found.")
