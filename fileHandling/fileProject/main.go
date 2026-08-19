@@ -3,7 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io"
 	"os"
+	"time"
 )
 
 func main() {
@@ -19,7 +21,15 @@ func main() {
 	fmt.Println("File data is:", fileData)
 	fmt.Println("Append data to file:", ApendData(file, []byte("\nAppended via function")))
 	fmt.Println("Deleteing said file:", DeleteFlie(delete_file))
-
+	size, modTime, err := FileStat(file)
+	if err != nil {
+		fmt.Println("Error! is:")
+		return
+	}
+	fmt.Println("File size is:", size)
+	fmt.Println("Mod time of file is:", modTime)
+	fmt.Println("Copying file:", CopyFile(file, delete_file))
+	defer fmt.Println("Deleting copied filed:", DeleteFlie(delete_file))
 }
 
 func CheckFile(path string) (bool, error) {
@@ -87,4 +97,39 @@ func DeleteFlie(path string) error {
 		return err
 	}
 	return nil
+}
+
+// get file statts
+
+func FileStat(path string) (int64, time.Time, error) {
+	info, err := os.Lstat(path)
+	if err != nil {
+		return 1, time.Time{}, err
+	}
+	size := info.Size()
+	modTime := info.ModTime()
+	return size, modTime, nil
+
+}
+
+// opy file form target to dstination
+
+func CopyFile(srcPath, desPath string) error {
+	src, err := os.Open(srcPath)
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	dest, err := os.Create(desPath)
+	if err != nil {
+		return err
+	}
+	defer dest.Close()
+
+	_, err = io.Copy(dest, src)
+	if err != nil {
+		return err
+	}
+	return dest.Sync()
 }
