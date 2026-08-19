@@ -1,0 +1,2 @@
+playing with os.Create, os.RedFile with its parameters
+os.Lstat to check file path 
