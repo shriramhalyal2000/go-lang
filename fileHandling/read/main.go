@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	path := "readme1"
+	//path1 := "readmenot"
 	file, fault := FileExists("readme")
 	if fault != nil {
 		return
@@ -17,6 +19,9 @@ func main() {
 		return
 	}
 	fmt.Println(content)
+	fmt.Println("create file:", CreateFile(path))
+	fmt.Println("File created if not already:", CreteFileIfNotExist(path))
+	fmt.Println("Write to file with data:", WriteToFile("readme1.txt", []byte("The file is been overwritten with this function")))
 }
 
 // takes in file path as string, and returns contents and an potential error
@@ -56,4 +61,33 @@ func FileExists(path string) (bool, error) {
 	}
 	fmt.Println("File exists!")
 	return true, nil
+}
+
+// create file function
+
+func CreateFile(path string) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return nil // if function suceeds no error
+}
+
+// create file if not created
+
+func CreteFileIfNotExist(path string) error {
+	file, err := os.OpenFile(path, os.O_RDWR|os.O_EXCL|os.O_CREATE, 0666) // checks path for file, read write perms exclusively, and creates if doesnot exist.
+	// if the file exists thrpws error
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return nil
+}
+
+// write to file, which overrides exiting content with new one
+
+func WriteToFile(path string, data []byte) error {
+	return os.WriteFile(path, data, 0644)
 }

@@ -1,1 +1,2 @@
-This file conly consists file read function execution,with error handling
+playing with os.Create, os.RedFile with its parameters
+os.Lstat to check file path 
